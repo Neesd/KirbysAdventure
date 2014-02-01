@@ -5,7 +5,8 @@ using System.Collections;
 
 public class kirbyController : MonoBehaviour {
 
-	private Animator kirbyAnimator;
+	private Animator 	kirbyAnimator;
+	public GameObject	electricPower;
 	public float 		speed = 12.5f;
 	public float		slowSpeed = 12.5f / 2.0f;
 	public float 		jumpSpeed = 7.0f;
@@ -17,9 +18,10 @@ public class kirbyController : MonoBehaviour {
 	public bool			grounded = false;
 	public bool			overDoor = false;
 	public bool			overBackDoor = false;
+	public bool			usingPower = false;
 	public enum power
 	{none, beam, electric, fire}
-	public power		currentPower = power.none;
+	public power		currentPower = power.electric;
 
 	// Use this for initialization
 	void Start () {
@@ -33,6 +35,7 @@ public class kirbyController : MonoBehaviour {
 		size.x = 13;
 		size.y = 13;
 		transform.localScale = size;
+		electricPower.SetActive (false);
 	}
 	
 	// Helper functions here
@@ -95,10 +98,15 @@ public class kirbyController : MonoBehaviour {
 			case power.beam:
 				break;
 			case power.electric:
+				electricPower.SetActive(true);
 				break;
 			case power.fire:
 				break;
 		}
+	}
+
+	void haltPowers () {
+		electricPower.SetActive(false);
 	}
 
 	// Update is called once per frame
@@ -157,6 +165,13 @@ public class kirbyController : MonoBehaviour {
 			vel.y = 0;
 		}
 
+		if (usingPower == false)
+		{
+			haltPowers();
+		}
+
+		// Assume NOT using power
+		usingPower = false;
 		// Set height and moving parameters
 		if ((Input.GetKey (KeyCode.DownArrow) && Input.GetKey ( KeyCode.UpArrow)) ||
 		    (Input.GetKey (KeyCode.LeftArrow) && Input.GetKey ( KeyCode.RightArrow)))
@@ -180,6 +195,7 @@ public class kirbyController : MonoBehaviour {
 			} else if (Input.GetKey (KeyCode.DownArrow)) {
 				//PUT SLIDE-KICK CODE HERE!
 			} else {
+				usingPower = true;
 				SetMoving (false);
 				UsePower(currentPower);
 			}

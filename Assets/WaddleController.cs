@@ -143,4 +143,10 @@ public class WaddleController : MonoBehaviour {
 			Flip ();
 		}
 	}
+
+	void Die ()
+	{
+		spawned = false;
+		renderer.enabled = false;
+	}
 }
