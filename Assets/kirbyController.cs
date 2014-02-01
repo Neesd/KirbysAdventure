@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+enum power
+{none, beam, electric, fire}
+
 public class kirbyController : MonoBehaviour {
 
 	private Animator kirbyAnimator;
@@ -13,6 +16,9 @@ public class kirbyController : MonoBehaviour {
 	public float 		drift = 0.3f;
 	public int 			direction = 1;
 	public bool			grounded = false;
+	public bool			overDoor = false;
+	public bool			overBackDoor = false;
+	public power		currentPower = power.none;
 
 	// Use this for initialization
 	void Start () {
@@ -48,10 +54,22 @@ public class kirbyController : MonoBehaviour {
 		 * 1 = inflated */
 	}
 
+	void ChangePosX(float deltaX) {
+		Vector2 newPos = transform.position;
+		newPos.x += deltaX;
+		transform.position = newPos;
+	}
+
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.tag == "Terrain") {
 			grounded = true;
 			print ("Enter");
+		}
+		if (other.tag == "Door") {
+			overDoor = true;
+		}
+		if (other.tag == "BackDoor") {
+			overBackDoor = true;
 		}
 	}
 
@@ -59,6 +77,26 @@ public class kirbyController : MonoBehaviour {
 		if (other.tag == "Terrain") {
 			grounded = false;
 			print ("Exit");
+		}
+		if (other.tag == "Door") {
+			overDoor = false;
+		}
+		if (other.tag == "BackDoor") {
+			overBackDoor = false;
+		}
+	}
+
+	void UsePower (power usedPower) {
+		switch (usedPower)
+		{
+			case power.none:
+				break;
+			case power.beam:
+				break;
+			case power.electric:
+				break;
+			case power.fire:
+				break;
 		}
 	}
 
@@ -79,9 +117,9 @@ public class kirbyController : MonoBehaviour {
 				vel.y = Mathf.Max (vel.y + slowFallSpeed / 10.0f, slowFallSpeed);
 			else
 				vel.y = Mathf.Max (vel.y + fallSpeed / 5.0f, fallSpeed);
-		} /*else {
-			vel.y = 0;
-		}*/
+		} else {
+			vel.y = slowFallSpeed;
+		}
 
 		if (height == 0) 
 		{
@@ -126,42 +164,59 @@ public class kirbyController : MonoBehaviour {
 			SetHeight (0);
 			SetMoving (false);
 		}
-		else if (Input.GetKey (KeyCode.DownArrow))
+		else if (Input.GetKey (KeyCode.DownArrow) && !Input.GetKey (KeyCode.S))
 		{
 			// Pressing down only, still can't move though
 			SetHeight (-1);
 			SetMoving (false);
 		}
-		else if (Input.GetKey (KeyCode.S) && floating)
+		else if (Input.GetKey (KeyCode.S) && !Input.GetKey (KeyCode.UpArrow))
 		{
-			SetHeight (0);
-			SetFloating (false);
-			SetJumping (false);
+			if (floating){
+				SetHeight (0);
+				SetFloating (false);
+				SetJumping (false);
+			} else if (Input.GetKey (KeyCode.DownArrow)) {
+				//PUT SLIDE-KICK CODE HERE!
+			} else {
+				SetMoving (false);
+				UsePower(currentPower);
+			}
 		}
 		else if (Input.GetKey (KeyCode.UpArrow))
 		{
-			SetHeight (1);
-			SetFloating (true);
-			SetJumping (true);
-			if (Input.GetKey (KeyCode.RightArrow) || Input.GetKey (KeyCode.LeftArrow))
+			if (overDoor == true)
 			{
-				// SetMoving left or right
-				SetMoving (true);
-				Vector3 scale = transform.localScale;
-				// Flip the model if you move in a different direction
-				// than where you were previously facing
-				if ((Input.GetKey (KeyCode.RightArrow) && direction == 0) ||
-				    (Input.GetKey (KeyCode.LeftArrow) && direction == 1))
-				{
-					if (height != -1)
-					{
-						scale.x *= -1;
-						direction = Mathf.Abs(direction - 1);
-					}
-				}
-				transform.localScale = scale;
+				ChangePosX(57f);
+				overDoor = false;
+			} else if (overBackDoor == true)
+			{
+				ChangePosX(-57.0f);
+				overBackDoor = false;
 			} else {
-				SetMoving (false);
+				SetHeight (1);
+				SetFloating (true);
+				SetJumping (true);
+				if (Input.GetKey (KeyCode.RightArrow) || Input.GetKey (KeyCode.LeftArrow))
+				{
+					// SetMoving left or right
+					SetMoving (true);
+					Vector3 scale = transform.localScale;
+					// Flip the model if you move in a different direction
+					// than where you were previously facing
+					if ((Input.GetKey (KeyCode.RightArrow) && direction == 0) ||
+					    (Input.GetKey (KeyCode.LeftArrow) && direction == 1))
+					{
+						if (height != -1)
+						{
+							scale.x *= -1;
+							direction = Mathf.Abs(direction - 1);
+						}
+					}
+					transform.localScale = scale;
+				} else {
+					SetMoving (false);
+				}
 			}
 		}
 		else if (Input.GetKey (KeyCode.RightArrow) || Input.GetKey (KeyCode.LeftArrow))
