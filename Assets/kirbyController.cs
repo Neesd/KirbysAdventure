@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-enum power
-{none, beam, electric, fire}
+
 
 public class kirbyController : MonoBehaviour {
 
@@ -18,6 +17,8 @@ public class kirbyController : MonoBehaviour {
 	public bool			grounded = false;
 	public bool			overDoor = false;
 	public bool			overBackDoor = false;
+	public enum power
+	{none, beam, electric, fire}
 	public power		currentPower = power.none;
 
 	// Use this for initialization
