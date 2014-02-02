@@ -264,4 +264,10 @@ public class BroncoController : MonoBehaviour {
 			renderer.enabled = false;
 		}
 	}
+	
+	void Die ()
+	{
+		spawned = false;
+		renderer.enabled = false;
+	}
 }

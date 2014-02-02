@@ -7,6 +7,8 @@ public class kirbyController : MonoBehaviour {
 
 	private Animator 	kirbyAnimator;
 	public GameObject	electricPower;
+	public GameObject	firePower;
+	public GameObject	noPower;
 	public float 		speed = 12.5f;
 	public float		slowSpeed = 12.5f / 2.0f;
 	public float 		jumpSpeed = 7.0f;
@@ -36,6 +38,8 @@ public class kirbyController : MonoBehaviour {
 		size.y = 13;
 		transform.localScale = size;
 		electricPower.SetActive (false);
+		firePower.SetActive (false);
+		noPower.SetActive (false);
 	}
 	
 	// Helper functions here
@@ -94,6 +98,7 @@ public class kirbyController : MonoBehaviour {
 		switch (usedPower)
 		{
 			case power.none:
+				noPower.SetActive(true);
 				break;
 			case power.beam:
 				break;
@@ -101,12 +106,20 @@ public class kirbyController : MonoBehaviour {
 				electricPower.SetActive(true);
 				break;
 			case power.fire:
+				firePower.SetActive(true);
 				break;
 		}
 	}
 
 	void haltPowers () {
 		electricPower.SetActive(false);
+		firePower.SetActive(false);
+		noPower.SetActive(false);
+	}
+
+	void assignPower (power acquiredPower) {
+		haltPowers ();
+		currentPower = acquiredPower;
 	}
 
 	// Update is called once per frame
@@ -263,6 +276,11 @@ public class kirbyController : MonoBehaviour {
 			SetMoving (false);
 			SetJumping (false);
 			SetHeight (0);
+		}
+		if (Input.GetKey (KeyCode.W))
+		{
+			currentPower = power.none;
+			haltPowers();
 		}
 
 		rigidbody2D.velocity = vel;
