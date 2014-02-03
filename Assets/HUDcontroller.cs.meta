@@ -2,7 +2,22 @@ fileFormatVersion: 2
 guid: 14ac69d577ea14f029d1912896ba790d
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - HUDlives0: {fileID: 2800000, guid: 2481f519467a14af3adee48a1ba84252, type: 3}
+  - HUDlives1: {fileID: 2800000, guid: ecc13973a52b840b1bfffba00720a3ab, type: 3}
+  - HUDlives2: {fileID: 2800000, guid: d5d172f8c5d8341f8b5141a955d4a6b0, type: 3}
+  - Health0: {fileID: 2800000, guid: a470b7e837f82493e87d06de415d31ac, type: 3}
+  - Health1: {fileID: 2800000, guid: b01c78668b59a4b0397723a89d3693be, type: 3}
+  - num0: {fileID: 2800000, guid: 6cd0febc684cf4c67b06ca02fef16f36, type: 3}
+  - num1: {fileID: 2800000, guid: 7f0920e1b14d24e62b92ddf5c1381bd5, type: 3}
+  - num2: {fileID: 2800000, guid: a5ba85fef04ff439691207ce3952ba04, type: 3}
+  - num3: {fileID: 2800000, guid: 50c3dc54088c743718d1410962cf2b46, type: 3}
+  - num4: {fileID: 2800000, guid: ec51e1f0f82e44b73a0c1b1913ce2631, type: 3}
+  - num5: {fileID: 2800000, guid: a49ae5dec47d244e7b68cfa6cd28e5f8, type: 3}
+  - num6: {fileID: 2800000, guid: 39df5f929908b4deab8d556c0fb27b17, type: 3}
+  - num7: {fileID: 2800000, guid: f30950683a31d43f59f062a872999906, type: 3}
+  - num8: {fileID: 2800000, guid: 87ed8f4a79d524563b39db22f7eda8da, type: 3}
+  - num9: {fileID: 2800000, guid: 001d8c0997bc14d9e9f293ebfff8a8ed, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

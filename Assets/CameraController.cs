@@ -4,35 +4,52 @@ using System.Collections;
 public class CameraController : MonoBehaviour {
 
 	public Transform target;
-	public float distance = 25;
+	public float distance = 24;
 
 	// Note: You need to drag "KirbyWalk_0" to the Target parameter
 	// 	     in the inspector
+
+	void Start() {
+		Vector3 pos = transform.position;
+		pos.y = 6;
+		transform.position = pos;
+	}
 
 	void Update () {
 		Vector3 LowerLeftCorner = Camera.main.ViewportToWorldPoint (new Vector3 (0, 0, distance));
 		Vector3 UpperRightCorner = Camera.main.ViewportToWorldPoint (new Vector3 (1, 1, distance));
 		float minX = LowerLeftCorner.x;
-		float minY = LowerLeftCorner.y;
 		float maxX = UpperRightCorner.x;
-		float maxY = UpperRightCorner.y;
 
 		float rightBound = (maxX + minX)/2;
 		float leftBound = rightBound - 3;
-		float topBound = (maxY + minY) / 2 + 2;
-		float bottomBound = topBound - 3;
 
 		Vector3 position = transform.position;
 
-		if (target.position.x >= rightBound)
+		if (target.position.x - 16 <= 0) {
+			position.x = 19;
+		}
+		else if ((target.position.x + 19 >= 132) && (target.position.x + 16 < 190)){
+			position.x = 113;
+		}
+		else if ((target.position.x > 190) && (target.position.x <= 218.7f - 3)){
+			position.x = 218.7f;
+		}
+		else if ((target.position.x >= 312) && (target.position.x < 372)){
+			position.x = 312;
+		}
+		else if ((target.position.x > 372) && (target.position.x <= 418.8f - 3)){
+			position.x = 418.8f;
+		}
+		else if ((target.position.x >= 512.4f) && (target.position.x < 570)){
+			position.x = 512.4f;
+		}
+		else if (target.position.x >= rightBound)
 			position.x = target.position.x;
 		else if (target.position.x <= leftBound)
 			position.x = target.position.x + 3;
 
-		if (target.position.y >= topBound)
-			position.y = target.position.y - 2;
-		else if (target.position.y <= bottomBound)
-			position.y = target.position.y + 1;
+
 
 
 		position.z = target.position.z - distance;
