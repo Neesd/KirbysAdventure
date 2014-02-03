@@ -76,28 +76,32 @@ public class kirbyController : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-		if (other.tag == "Terrain") {
-			grounded = true;
-			print ("Enter");
-		}
-		if (other.tag == "Door") {
-			overDoor = true;
-		}
-		if (other.tag == "BackDoor") {
-			overBackDoor = true;
+		if (other) {
+			if (other.tag == "Terrain") {
+				grounded = true;
+				print ("Enter");
+			}
+			if (other.tag == "Door") {
+				overDoor = true;
+			}
+			if (other.tag == "BackDoor") {
+				overBackDoor = true;
+			}		
 		}
 	}
 
 	void OnTriggerExit2D(Collider2D other) {
-		if (other.tag == "Terrain") {
-			grounded = false;
-			print ("Exit");
-		}
-		if (other.tag == "Door") {
-			overDoor = false;
-		}
-		if (other.tag == "BackDoor") {
-			overBackDoor = false;
+		if (other){
+			if (other.tag == "Terrain") {
+				grounded = false;
+				print ("Exit");
+			}
+			if (other.tag == "Door") {
+				overDoor = false;
+			}
+			if (other.tag == "BackDoor") {
+				overBackDoor = false;
+			}		
 		}
 	}
 
