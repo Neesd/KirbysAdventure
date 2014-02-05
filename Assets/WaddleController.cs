@@ -39,6 +39,11 @@ public class WaddleController : MonoBehaviour {
 		spawnDirection = -1 * transform.localScale.x / 13;	
 		// Determines if you're starting facing left or right by + or -
 	}
+
+	void Die () {
+		grounded = false;
+		parent.SendMessage("kill", spawnDirection);
+	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -60,8 +65,7 @@ public class WaddleController : MonoBehaviour {
 	{
 		if (col.gameObject.tag == "Player") 
 		{
-			grounded = false;
-			parent.SendMessage("kill", spawnDirection);
+			Die();
 		}
 		else if (col.gameObject.tag == "Terrain")
 		{

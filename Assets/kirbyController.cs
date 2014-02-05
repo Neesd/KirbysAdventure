@@ -26,7 +26,7 @@ public class kirbyController : MonoBehaviour {
 	public bool			usingPower = false;
 	public enum power
 	{none, beam, electric, fire}
-	public power		currentPower = power.electric;
+	public power		currentPower = power.none;
 
 	// Use this for initialization
 	void Start () {
@@ -149,6 +149,11 @@ public class kirbyController : MonoBehaviour {
 		bool floating = kirbyAnimator.GetBool ("Floating");
 		bool jumping = kirbyAnimator.GetBool ("Jumping");
 		bool hopping = kirbyAnimator.GetBool ("Hopping");
+		Vector3 position = transform.position;
+		if (position.z != -0.2f) {
+			position.z = -0.2f;
+			transform.position = position;
+		}
 
 		Vector2 vel = rigidbody2D.velocity;
 		if (jumping)
