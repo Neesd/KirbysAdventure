@@ -10,6 +10,7 @@ public class kirbyController : MonoBehaviour {
 	private float 		expectedHopDist = 3;
 	private float		hopStart;
 	private float		lastHeight, lastLastHeight;
+	public GameObject	beamPower;
 	public GameObject	electricPower;
 	public GameObject	firePower;
 	public GameObject	noPower;
@@ -44,6 +45,7 @@ public class kirbyController : MonoBehaviour {
 		size.x = 13;
 		size.y = 13;
 		transform.localScale = size;
+		beamPower.SetActive (false);
 		electricPower.SetActive (false);
 		firePower.SetActive (false);
 		noPower.SetActive (false);
@@ -128,6 +130,7 @@ public class kirbyController : MonoBehaviour {
 				noPower.SetActive(true);
 				break;
 			case power.beam:
+			beamPower.SetActive(true);
 				break;
 			case power.electric:
 				electricPower.SetActive(true);
@@ -139,6 +142,7 @@ public class kirbyController : MonoBehaviour {
 	}
 
 	void haltPowers () {
+		beamPower.SetActive(false);
 		electricPower.SetActive(false);
 		firePower.SetActive(false);
 		noPower.SetActive(false);
