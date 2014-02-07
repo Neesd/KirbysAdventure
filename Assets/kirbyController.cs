@@ -82,8 +82,8 @@ public class kirbyController : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other) {
-			triggered = true;
 			if (other.tag == "Terrain" || other.tag == "fancyPlatform") {
+				triggered = true;
 				grounded = true;
 				SetHeight (0);
 			}
