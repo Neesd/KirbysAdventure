@@ -63,18 +63,21 @@ public class WaddleController : MonoBehaviour {
 
 	void OnTriggerEnter2D (Collider2D col)
 	{
-		if (col.gameObject.tag == "Player") 
+		if (col && col.gameObject)
 		{
-			Die();
-		}
-		else if (col.gameObject.tag == "Terrain")
-		{
-			if (!grounded)
+			if (col.gameObject.tag == "Player") 
 			{
-				grounded = true;
+				Die();
 			}
-			else{
-				Flip ();
+			else if (col.gameObject.tag == "Terrain")
+			{
+				if (!grounded)
+				{
+					grounded = true;
+				}
+				else{
+					Flip ();
+				}
 			}
 		}
 	}
