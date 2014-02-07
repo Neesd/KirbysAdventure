@@ -75,9 +75,11 @@ public class WaddleController : MonoBehaviour {
 				{
 					grounded = true;
 				}
-				else{
-					Flip ();
-				}
+			}
+			else if (col.gameObject.tag == "Wall")
+			{
+				Flip ();
+				spawnDirection *= -1;
 			}
 		}
 	}
