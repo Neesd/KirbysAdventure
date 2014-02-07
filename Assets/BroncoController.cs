@@ -53,8 +53,7 @@ public class BroncoController : MonoBehaviour {
 		boxSize.x = 0.15f;
 		boxSize.y = 0.15f;
 		boxCol.size = boxSize;
-		
-		target = GameObject.FindWithTag ("Player").transform;
+
 		Vector3 targetPos = target.position;
 		Vector3 position = transform.position;
 		originalPos = position;
