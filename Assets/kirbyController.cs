@@ -238,6 +238,8 @@ public class kirbyController : MonoBehaviour {
 
 		if (usingPower == false) {
 			haltPowers ();
+		} else {
+			vel.x = 0f;
 		}
 
 		// Assume NOT using power
