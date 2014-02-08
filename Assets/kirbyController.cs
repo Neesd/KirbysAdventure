@@ -95,7 +95,10 @@ public class kirbyController : MonoBehaviour {
 			}
 			if (other.tag == "BackDoor") {
 				overBackDoor = true;
-			}		
+			}
+			if (other.tag == "KillBlock") {
+				hud.die();
+			}
 		}
 	}
 
