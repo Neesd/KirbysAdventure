@@ -10,6 +10,7 @@ public class kirbyController : MonoBehaviour {
 	private float 		expectedHopDist = 3;
 	private float		hopStart;
 	private float		lastHeight, lastLastHeight;
+	public HUDcontroller	hud;
 	public GameObject	beamPower;
 	public GameObject	electricPower;
 	public GameObject	firePower;
@@ -109,7 +110,7 @@ public class kirbyController : MonoBehaviour {
 			}
 			if (other.tag == "BackDoor") {
 				overBackDoor = false;
-			}		
+			}
 			if (other.tag == "fancyPlatform"){
 				grounded = false;
 				other.gameObject.SendMessage ("TriggerOff");
@@ -118,7 +119,7 @@ public class kirbyController : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D other) {
-		if (!triggered && other.collider.tag == "fancyPlatform"){
+		if (!triggered && other.collider.tag == "fancyPlatform") {
 			other.gameObject.SendMessage ("TriggerOn");
 		}
 	}
@@ -153,6 +154,19 @@ public class kirbyController : MonoBehaviour {
 		currentPower = acquiredPower;
 	}
 
+	public void getHit () {
+		hud.loseHealth();
+	}
+
+	public void reset () {
+		Vector3 position = new Vector3 (5.405118f + (transform.position.x - transform.position.x % 200f), 5.086665f, -0.2f);
+		transform.position = position;
+	}
+
+	public void superReset () {
+		Vector3 position = new Vector3 (5.405118f, 5.086665f, -0.2f);
+		transform.position = position;
+	}
 
 
 	//*********************************//

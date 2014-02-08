@@ -7,6 +7,7 @@ public class HUDcontroller : MonoBehaviour {
 
 	// Yes, I know this is terrible, just bear with it and 
 	// drag them all into the inspector.
+	public kirbyController kirby;
 	public Texture2D HUDlives0;
 	public Texture2D HUDlives1;
 	public Texture2D HUDlives2;
@@ -41,6 +42,28 @@ public class HUDcontroller : MonoBehaviour {
 
 	void setHealth(int healthPoints){
 		health = healthPoints;
+	}
+
+	public void loseHealth() {
+		health--;
+		if (health <= 0) {
+			die ();
+		}
+	}
+
+	public void die() {
+		lives--;
+		health = 6;
+		if (lives < 0) {
+			superDie ();
+		} else {
+			kirby.reset ();
+		}
+	}
+
+	void superDie() {
+		lives = 4;
+		kirby.superReset ();
 	}
 
 	void Start () {

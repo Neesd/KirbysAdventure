@@ -259,6 +259,7 @@ public class BroncoController : MonoBehaviour {
 	{
 		if (col.gameObject.tag == "Player") 
 		{
+			col.gameObject.SendMessage("getHit");
 			spawned = false;
 			renderer.enabled = false;
 		}

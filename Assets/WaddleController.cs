@@ -66,6 +66,7 @@ public class WaddleController : MonoBehaviour {
 		{
 			if (col.gameObject.tag == "Player") 
 			{
+				col.gameObject.SendMessage("getHit");
 				Die();
 			}
 			else if (col.gameObject.tag == "Terrain")
