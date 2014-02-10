@@ -283,7 +283,7 @@ public class kirbyController : MonoBehaviour {
 
 
 		// If you don't hold the hop button, you stop hopping; if you land, you aren't hopping.
-		if (hopping && !Input.GetKey(KeyCode.A)) {		
+		if (hopping && !Input.GetKey(KeyCode.Z)) {		
 			SetHopping (false);
 			hopping = false;
 			expectedHopDist = maxHopDistance;
@@ -299,7 +299,7 @@ public class kirbyController : MonoBehaviour {
 			// Pressing conflicting keys
 			SetMoving (false);
 		}
-		else if (Input.GetKey (KeyCode.DownArrow) && !Input.GetKey (KeyCode.S) && grounded)
+		else if (Input.GetKey (KeyCode.DownArrow) && !Input.GetKey (KeyCode.X) && grounded)
 		{
 			// Pressing down only, still can't move though
 			SetHeight (-1);
@@ -319,7 +319,7 @@ public class kirbyController : MonoBehaviour {
 			}
 			transform.localScale = scale;
 		}
-		else if (Input.GetKey (KeyCode.S) && !Input.GetKey (KeyCode.UpArrow))
+		else if (Input.GetKey (KeyCode.X) && !Input.GetKey (KeyCode.UpArrow))
 		{
 			if (floating){
 				SetFloating (false);
@@ -333,7 +333,7 @@ public class kirbyController : MonoBehaviour {
 				UsePower(currentPower);
 			}
 		}
-		else if (Input.GetKey (KeyCode.UpArrow) || (Input.GetKeyDown (KeyCode.A) && floating))
+		else if (Input.GetKey (KeyCode.UpArrow) || (Input.GetKeyDown (KeyCode.Z) && floating))
 		{
 			if (overDoor == true)
 			{
@@ -370,7 +370,7 @@ public class kirbyController : MonoBehaviour {
 				}
 			}
 		}
-		else if (Input.GetKeyDown (KeyCode.A) && !floating && grounded) {
+		else if (Input.GetKeyDown (KeyCode.Z) && !floating && grounded) {
 			SetJumping (false);
 			SetHopping (true);
 			SetHeight (2);
@@ -408,7 +408,7 @@ public class kirbyController : MonoBehaviour {
 			SetMoving (false);
 			SetJumping (false);
 		}
-		if (Input.GetKey (KeyCode.W))
+		if (Input.GetKey (KeyCode.Space))
 		{
 			currentPower = power.none;
 			haltPowers();
