@@ -32,6 +32,7 @@ public class kirbyController : MonoBehaviour {
 	{none, beam, electric, fire}
 	public power		currentPower = power.none;
 	private bool		triggered = false;
+	private float		initialTime;
 
 	// Use this for initialization
 	void Start () {
@@ -49,6 +50,7 @@ public class kirbyController : MonoBehaviour {
 		electricPower.SetActive (false);
 		firePower.SetActive (false);
 		noPower.SetActive (false);
+		initialTime = Time.time - 20f;
 	}
 	
 	// Helper functions here
@@ -157,7 +159,10 @@ public class kirbyController : MonoBehaviour {
 	}
 
 	public void getHit () {
-		hud.loseHealth();
+		if (Time.time - initialTime >= 2) {
+			initialTime = Time.time;
+			hud.loseHealth();
+		}
 	}
 
 	public void reset () {

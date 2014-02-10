@@ -14,6 +14,7 @@ TagManager:
   - Wall
   - fancyPlatform
   - BeamEnemy
+  - KillBlock
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
@@ -31,7 +32,7 @@ TagManager:
   User Layer 13: Flying Enemies
   User Layer 14: Door
   User Layer 15: Items
-  User Layer 16: 
+  User Layer 16: KillBlock
   User Layer 17: 
   User Layer 18: 
   User Layer 19: 
