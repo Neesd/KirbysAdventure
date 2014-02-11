@@ -288,7 +288,7 @@ public class kirbyController : MonoBehaviour {
 			SetHeight (0);
 		}
 
-		if (!Input.GetKey (KeyCode.X)) {
+		if (!Input.GetKey (KeyCode.X) || Input.GetKey (KeyCode.UpArrow)) {
 			// No perma inhale
 			haltPowers();
 		}
@@ -326,7 +326,7 @@ public class kirbyController : MonoBehaviour {
 				SetFloating (false);
 				SetJumping (false);
 			}
-		} else if (Input.GetKeyDown (KeyCode.X) || (Input.GetKey (KeyCode.X) && !powerInterrupt)) {
+		} else if ((Input.GetKeyDown (KeyCode.X) || (Input.GetKey (KeyCode.X) && !powerInterrupt))&& !Input.GetKey (KeyCode.UpArrow)) {
 			if (Input.GetKey (KeyCode.DownArrow)) {
 				//PUT SLIDE-KICK CODE HERE!
 				SetHeight (-1); // It should be already, but there's a glitch.
