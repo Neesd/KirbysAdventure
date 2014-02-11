@@ -38,6 +38,12 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
+  - m_Name: Falling
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 1
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 3
     m_Name: Base Layer
@@ -143,6 +149,10 @@ Transition:
   m_Conditions:
   - m_ConditionMode: 2
     m_ConditionEvent: Hopping
+    m_EventTreshold: 0
+    m_ExitTime: 1
+  - m_ConditionMode: 1
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
     m_ExitTime: 1
   m_Atomic: 1
@@ -299,6 +309,10 @@ Transition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: Height
+    m_EventTreshold: 0
+    m_ExitTime: 1
+  - m_ConditionMode: 2
+    m_ConditionEvent: Falling
     m_EventTreshold: 0
     m_ExitTime: 1
   m_Atomic: 1
@@ -458,6 +472,24 @@ Transition:
   m_Atomic: 1
   m_Solo: 0
   m_Mute: 0
+--- !u!1101 &110174729
+Transition:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_SrcState: {fileID: 110281193}
+  m_DstState: {fileID: 110234239}
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: Falling
+    m_EventTreshold: 0
+    m_ExitTime: 1
+  m_Atomic: 1
+  m_Solo: 0
+  m_Mute: 0
 --- !u!1101 &110174843
 Transition:
   m_ObjectHideFlags: 3
@@ -498,6 +530,50 @@ Transition:
   - m_ConditionMode: 2
     m_ConditionEvent: Floating
     m_EventTreshold: -1
+    m_ExitTime: 1
+  m_Atomic: 1
+  m_Solo: 0
+  m_Mute: 0
+--- !u!1101 &110187961
+Transition:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_SrcState: {fileID: 110226852}
+  m_DstState: {fileID: 110281193}
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
+  m_Conditions:
+  - m_ConditionMode: 2
+    m_ConditionEvent: Hopping
+    m_EventTreshold: 0
+    m_ExitTime: 1
+  - m_ConditionMode: 2
+    m_ConditionEvent: Falling
+    m_EventTreshold: 0
+    m_ExitTime: 1
+  - m_ConditionMode: 6
+    m_ConditionEvent: Height
+    m_EventTreshold: 0
+    m_ExitTime: 1
+  m_Atomic: 1
+  m_Solo: 0
+  m_Mute: 0
+--- !u!1101 &110194514
+Transition:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_SrcState: {fileID: 110226407}
+  m_DstState: {fileID: 110281193}
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
+  m_Conditions:
+  - m_ConditionMode: 2
+    m_ConditionEvent: Falling
+    m_EventTreshold: 0
     m_ExitTime: 1
   m_Atomic: 1
   m_Solo: 0
@@ -741,6 +817,7 @@ StateMachine:
       - {fileID: 110186782}
       - {fileID: 110156955}
       - {fileID: 110107521}
+      - {fileID: 110174729}
     data:
       first: {fileID: 110261336}
       second:
@@ -756,11 +833,13 @@ StateMachine:
       second:
       - {fileID: 110141841}
       - {fileID: 110112027}
+      - {fileID: 110187961}
     data:
       first: {fileID: 110226407}
       second:
       - {fileID: 110104124}
       - {fileID: 110124723}
+      - {fileID: 110194514}
     data:
       first: {fileID: 110234239}
       second:

@@ -23,6 +23,11 @@ public class HUDcontroller : MonoBehaviour {
 	public Texture2D num7;
 	public Texture2D num8;
 	public Texture2D num9;
+	public Texture2D MissHUD;
+	public Texture2D SparkHUD;
+	public Texture2D OuchHUD;
+	public Texture2D FireHUD;
+	public Texture2D BeamHUD;
 
 	// These simplify code below
 	private Texture2D[] HUDlives;
@@ -36,7 +41,9 @@ public class HUDcontroller : MonoBehaviour {
 	public float lives = 4;
 	public float health = 6;
 	public float points = 0;
+	public string status = "normal";
 
+	private float statusCounter = 0;
 	private float heightFactor;
 	private float widthFactor;
 
@@ -47,8 +54,11 @@ public class HUDcontroller : MonoBehaviour {
 	public void loseHealth() {
 		health--;
 		if (health <= 0) {
+			setStatus ("miss");
 			die ();
 		}
+		else
+			setStatus ("ouch");
 	}
 
 	public void die() {
@@ -59,6 +69,11 @@ public class HUDcontroller : MonoBehaviour {
 		} else {
 			kirby.reset ();
 		}
+		setStatus ("miss");
+	}
+
+	void setStatus(string state){
+		status = state;
 	}
 
 	void superDie() {
@@ -102,6 +117,29 @@ public class HUDcontroller : MonoBehaviour {
 		}
 		else {
 			healthCount = 0;
+		}
+
+		if (!((status == "ouch") || (status == "miss")))
+		{
+			switch (kirby.currentPower)
+			{
+				case kirbyController.power.none:
+					if (status != "normal")
+						setStatus ("normal");
+					break;
+				case kirbyController.power.beam:
+					if (status != "beam")
+						setStatus ("beam");
+					break;
+				case kirbyController.power.electric:
+					if (status != "spark")
+						setStatus ("spark");
+					break;
+				case kirbyController.power.fire:
+					if (status != "fire")
+						setStatus ("fire");
+					break;
+			}
 		}
 	}
 
@@ -163,6 +201,41 @@ public class HUDcontroller : MonoBehaviour {
 			GUI.DrawTexture (new Rect (pointsX - i * pointsDist, pointsY, 
 				                       pointsWidth, pointsHeight), 
 				             Numbers[Mathf.FloorToInt (pointsArray[i])]);
+		}
+
+
+		// HUD status
+		float statusX = 296 * widthFactor;
+		float statusY = 281 * heightFactor;
+		float statusWidth = 65 * widthFactor;
+		float statusHeight = 72 * heightFactor;
+		Rect statusLoc = new Rect (statusX, statusY, statusWidth, statusHeight);
+		if (status == "miss") {
+			if (statusCounter < 140)
+				statusCounter = statusCounter + 1;
+			else {
+				status = "default";
+				statusCounter = 0;
+			}
+			GUI.DrawTexture (statusLoc, MissHUD);
+		}
+		else if (status == "spark") {
+			GUI.DrawTexture (statusLoc, SparkHUD);
+		}
+		else if (status == "fire") {
+			GUI.DrawTexture (statusLoc, FireHUD);
+		}
+		else if (status == "beam") {
+			GUI.DrawTexture (statusLoc, BeamHUD);
+		}
+		else if (status == "ouch") {
+			if (statusCounter < 140)
+				statusCounter = statusCounter + 1;
+			else {
+				status = "default";
+				statusCounter = 0;
+			}
+			GUI.DrawTexture (statusLoc, OuchHUD);
 		}
 	}
 }

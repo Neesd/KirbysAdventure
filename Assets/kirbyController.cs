@@ -5,10 +5,6 @@ using System.Collections;
 public class kirbyController : MonoBehaviour {
 
 	private Animator 	kirbyAnimator;
-	private float		maxHopDistance = 5.5f;
-	private float 		expectedHopDist = 3;
-	private float		hopStart;
-	private float		lastHeight, lastLastHeight;
 	public HUDcontroller	hud;
 	public GameObject	beamPower;
 	public GameObject	electricPower;
@@ -17,8 +13,8 @@ public class kirbyController : MonoBehaviour {
 	public float 		speed = 10.5f;
 	public float		slowSpeed = 5.5f;
 	public float 		jumpSpeed = 7.0f;
-	public float 		hopSpeed = 8f;
-	public float 		hopAcc = 2f;
+	public float 		hopSpeed = 13;
+	private bool 		initHop = false;
 	public float 		fallSpeed = -14.0f;
 	public float 		slowFallSpeed = -10.0f / 2.0f;
 	private float 		hopFlight = 1;
@@ -70,6 +66,10 @@ public class kirbyController : MonoBehaviour {
 		kirbyAnimator.SetBool ("Hopping", x);
 	}
 
+	void SetFalling(bool x){
+		kirbyAnimator.SetBool ("Falling", x);
+	}
+
 	void SetHeight(int x){
 		kirbyAnimator.SetInteger ("Height", x);
 		/*-1 = floor squish
@@ -90,6 +90,8 @@ public class kirbyController : MonoBehaviour {
 				triggered = true;
 				grounded = true;
 				SetHeight (0);
+				SetHopping (false);
+				SetFalling (false);
 			}
 			if (other.tag == "Door") {
 				overDoor = true;
@@ -135,7 +137,7 @@ public class kirbyController : MonoBehaviour {
 				noPower.SetActive(true);
 				break;
 			case power.beam:
-			beamPower.SetActive(true);
+				beamPower.SetActive(true);
 				break;
 			case power.electric:
 				electricPower.SetActive(true);
@@ -161,6 +163,8 @@ public class kirbyController : MonoBehaviour {
 	public void getHit () {
 		if (Time.time - initialTime >= 2) {
 			initialTime = Time.time;
+			currentPower = power.none;
+			haltPowers ();
 			hud.loseHealth();
 		}
 	}
@@ -204,44 +208,29 @@ public class kirbyController : MonoBehaviour {
 			if (floating)
 				vel.y = Mathf.Max (vel.y + slowFallSpeed / 10.0f, slowFallSpeed);
 			else if (hopping) {
-				hopFlight = hopFlight + 0.35f;
-				if (transform.position.y < hopStart + expectedHopDist/2.0f)
-				{
-					vel.y += hopAcc + 3 - hopFlight;
+				if (hopFlight < 15){
+					hopFlight = hopFlight + 1;
 				}
-				if (expectedHopDist < maxHopDistance)
-				{
-					expectedHopDist = expectedHopDist + 1;
-				}
-				if (transform.position.y >= hopStart + maxHopDistance) {
-					vel.y = 5;
+				else {
 					SetHopping (false);
-					SetHeight (2);
-					hopping = false;
-				} else {
-					if (transform.position.y == lastHeight && lastHeight == lastLastHeight) {
-						//vel.y = 0;
-						SetHopping (false);
-						hopping = false;
-					} else {
-						lastLastHeight = lastHeight;
-						lastHeight = transform.position.y;
-					}
+					initHop = false;
 				}
-			}
-			else{
-				grounded = false;
-				if (hopFlight > 1)
+				if (initHop)
 				{
-					hopFlight = hopFlight - 0.6f;
-					vel.y = 0;
+					vel.y = hopSpeed + hopFlight;
+					initHop = false;
 				}
-				else{
-					vel.y = Mathf.Max (vel.y + fallSpeed / 5.0f, fallSpeed);;
+
+				if (vel.y <= 0){
+					SetFalling (true);
 				}
 			}
-		} else if (hopping) {
-			vel.y = hopSpeed;
+			else {
+				if (vel.y <= 0){
+					SetFalling (true);
+				}
+				vel.y -= hopSpeed * Time.deltaTime * 2.6f;
+			}
 		} else {
 			vel.y = slowFallSpeed;
 		}
@@ -273,7 +262,8 @@ public class kirbyController : MonoBehaviour {
 		}
 
 		if (usingPower == false) {
-			haltPowers ();
+			if (currentPower != power.none)
+				haltPowers ();
 		} else {
 			vel.x = 0f;
 		}
@@ -286,10 +276,14 @@ public class kirbyController : MonoBehaviour {
 		if (hopping && !Input.GetKey(KeyCode.Z)) {		
 			SetHopping (false);
 			hopping = false;
-			expectedHopDist = maxHopDistance;
 		}
 		if ((height == -1) && !Input.GetKey (KeyCode.DownArrow) && grounded){
 			SetHeight (0);
+		}
+
+		if (!Input.GetKey (KeyCode.X)) {
+			// No perma inhale
+			haltPowers();
 		}
 
 		// Set height and moving parameters
@@ -333,7 +327,7 @@ public class kirbyController : MonoBehaviour {
 				UsePower(currentPower);
 			}
 		}
-		else if (Input.GetKey (KeyCode.UpArrow) || (Input.GetKeyDown (KeyCode.Z) && floating))
+		else if (Input.GetKey (KeyCode.UpArrow) || (Input.GetKeyDown (KeyCode.Z) && (!grounded || (floating && grounded))))
 		{
 			if (overDoor == true)
 			{
@@ -348,6 +342,7 @@ public class kirbyController : MonoBehaviour {
 				grounded = false;
 				SetFloating (true);
 				SetJumping (true);
+				SetFalling (false);
 				if (Input.GetKey (KeyCode.RightArrow) || Input.GetKey (KeyCode.LeftArrow))
 				{
 					// SetMoving left or right
@@ -373,13 +368,11 @@ public class kirbyController : MonoBehaviour {
 		else if (Input.GetKeyDown (KeyCode.Z) && !floating && grounded) {
 			SetJumping (false);
 			SetHopping (true);
+			SetFalling (false);
 			SetHeight (2);
 			hopping = true;
 			grounded = false;
-			hopStart = transform.position.y;
-			expectedHopDist = 3;
-			lastHeight = -3000f;
-			lastLastHeight = -6000f;
+			initHop = true;
 			hopFlight = 1;
 		}
 		else if (Input.GetKey (KeyCode.RightArrow) || Input.GetKey (KeyCode.LeftArrow))

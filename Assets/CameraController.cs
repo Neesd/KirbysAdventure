@@ -38,23 +38,23 @@ public class CameraController : MonoBehaviour {
 		else if ((target.position.x >= 312) && (target.position.x < 372)){
 			position.x = 312;
 		}
-		else if ((target.position.x > 372) && (target.position.x <= 418.8f - 3)){
+		else if ((target.position.x > 370) && (target.position.x <= 418.8f - 3)){
 			position.x = 418.8f;
 		}
 		else if ((target.position.x >= 512.4f) && (target.position.x < 570)){
 			position.x = 512.4f;
 		}
-		else if ((target.position.x > 602) && (target.position.x <= 619.5f - 3 )) {
+		else if ((target.position.x > 600) && (target.position.x <= 619.5f - 3 )) {
 			position.x = 619.5f;
 		}
 		else if ((target.position.x >= 710 + 3) && (target.position.x < 780)) {
 			position.x = 710 + 3;
 		}
-		else if ((target.position.x > 802) && (target.position.x < 819 - 3)) {
+		else if ((target.position.x > 800) && (target.position.x < 819 - 3)) {
 			position.x = 819;
 		}
-		else if ((target.position.x >= 911.3f + 3) && (target.position.x < 980)) {
-			position.x = 911.3f + 3;
+		else if ((target.position.x >= 911.3f + 2) && (target.position.x < 980)) {
+			position.x = 911.3f + 2;
 		}
 		else if (target.position.x >= rightBound)
 			position.x = target.position.x;

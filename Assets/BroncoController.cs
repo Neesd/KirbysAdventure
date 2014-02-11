@@ -57,6 +57,10 @@ public class BroncoController : MonoBehaviour {
 	void Update () {
 		Vector3 targetPos = target.position;
 		Vector3 position = transform.position;
+		if (!onScreen (position))
+		{
+			Die ();
+		}
 
 		if (type == "ground")
 		{
@@ -140,6 +144,8 @@ public class BroncoController : MonoBehaviour {
 				{
 					if (position.x == originalPos.x)
 					{
+
+						prevDirection = -1 * transform.localScale.x / 13;
 						if (targetPos.x < position.x)
 						{
 							spawnDirection = -1;
@@ -183,6 +189,8 @@ public class BroncoController : MonoBehaviour {
 	
 	void Die ()
 	{
+		started = false;
+		counter = 1;
 		parent.SendMessage("kill", spawnDirection);
 	}
 }
