@@ -27,7 +27,6 @@ public class kirbyController : MonoBehaviour {
 	public enum power
 	{none, beam, electric, fire}
 	public power		currentPower = power.none;
-	private bool		triggered = false;
 	private float		initialTime;
 	private bool		powerInterrupt = false;
 
@@ -88,7 +87,6 @@ public class kirbyController : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other) {
 			if (other.tag == "Terrain" || other.tag == "fancyPlatform") {
-				triggered = true;
 				grounded = true;
 				SetHeight (0);
 				SetHopping (false);
@@ -108,8 +106,7 @@ public class kirbyController : MonoBehaviour {
 
 	void OnTriggerExit2D(Collider2D other) {
 		if (other){
-			triggered = false;
-			if (other.tag == "Terrain") {
+			if (other.tag == "Terrain" || other.tag == "fancyPlatform") {
 				grounded = false;
 			}
 			if (other.tag == "Door") {
@@ -118,16 +115,6 @@ public class kirbyController : MonoBehaviour {
 			if (other.tag == "BackDoor") {
 				overBackDoor = false;
 			}
-			if (other.tag == "fancyPlatform"){
-				grounded = false;
-				other.gameObject.SendMessage ("TriggerOff");
-			}
-		}
-	}
-
-	void OnCollisionEnter2D(Collision2D other) {
-		if (!triggered && other.collider.tag == "fancyPlatform") {
-			other.gameObject.SendMessage ("TriggerOn");
 		}
 	}
 
