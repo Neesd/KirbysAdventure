@@ -29,6 +29,7 @@ public class kirbyController : MonoBehaviour {
 	public power		currentPower = power.none;
 	private bool		triggered = false;
 	private float		initialTime;
+	private bool		powerInterrupt = false;
 
 	// Use this for initialization
 	void Start () {
@@ -157,6 +158,7 @@ public class kirbyController : MonoBehaviour {
 
 	void assignPower (power acquiredPower) {
 		haltPowers ();
+		powerInterrupt = true;
 		currentPower = acquiredPower;
 	}
 
@@ -164,6 +166,7 @@ public class kirbyController : MonoBehaviour {
 		if (Time.time - initialTime >= 2) {
 			initialTime = Time.time;
 			currentPower = power.none;
+			powerInterrupt = true;
 			haltPowers ();
 			hud.loseHealth();
 		}
@@ -172,11 +175,15 @@ public class kirbyController : MonoBehaviour {
 	public void reset () {
 		Vector3 position = new Vector3 (5.405118f + (transform.position.x - transform.position.x % 200f), 5.086665f, -0.2f);
 		transform.position = position;
+		currentPower = power.none;
+		haltPowers ();
 	}
 
 	public void superReset () {
 		Vector3 position = new Vector3 (5.405118f, 5.086665f, -0.2f);
 		transform.position = position;
+		currentPower = power.none;
+		haltPowers ();
 	}
 
 
@@ -313,21 +320,24 @@ public class kirbyController : MonoBehaviour {
 			}
 			transform.localScale = scale;
 		}
-		else if (Input.GetKey (KeyCode.X) && !Input.GetKey (KeyCode.UpArrow))
+		else if (Input.GetKey (KeyCode.X) && !Input.GetKey (KeyCode.UpArrow) && floating)
 		{
 			if (floating){
 				SetFloating (false);
 				SetJumping (false);
-			} else if (Input.GetKey (KeyCode.DownArrow)) {
+			}
+		} else if (Input.GetKeyDown (KeyCode.X) || (Input.GetKey (KeyCode.X) && !powerInterrupt)) {
+			if (Input.GetKey (KeyCode.DownArrow)) {
 				//PUT SLIDE-KICK CODE HERE!
 				SetHeight (-1); // It should be already, but there's a glitch.
 			} else {
+				powerInterrupt = false;
 				usingPower = true;
 				SetMoving (false);
 				UsePower(currentPower);
 			}
 		}
-		else if (Input.GetKey (KeyCode.UpArrow) || (Input.GetKeyDown (KeyCode.Z) && (!grounded || (floating && grounded))))
+		else if (Input.GetKey (KeyCode.UpArrow) || (Input.GetKey (KeyCode.Z) && floating))
 		{
 			if (overDoor == true)
 			{
