@@ -4,9 +4,8 @@ using System.Collections;
 public class launcherController : MonoBehaviour {
 	public kirbyController kirby;
 	public CameraController cam;
-	public WaddleController waddle;
-	public BroncoController bronco;
 	private Vector3 position;
+	public HUDcontroller hud;
 
 	
 	// Use this for initialization
@@ -19,6 +18,12 @@ public class launcherController : MonoBehaviour {
 			position = cam.transform.position;
 			position.z = 0f;
 			transform.position = position;
+			if (kirby.transform.position.x >= 1130f) {
+				kirbyController.power tempPower = kirby.currentPower;
+				hud.addPoints(50000);
+				hud.superDie();
+				kirby.assignPower(tempPower);
+			}
 		}
 	}
 }

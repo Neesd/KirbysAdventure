@@ -143,7 +143,7 @@ public class kirbyController : MonoBehaviour {
 		noPower.SetActive(false);
 	}
 
-	void assignPower (power acquiredPower) {
+	public void assignPower (power acquiredPower) {
 		haltPowers ();
 		powerInterrupt = true;
 		currentPower = acquiredPower;

@@ -58,6 +58,12 @@ public class CameraController : MonoBehaviour {
 		else if ((target.position.x >= 911.3f + 2) && (target.position.x < 980)) {
 			position.x = 911.3f + 2;
 		}
+		else if ((target.position.x > 1000) && (target.position.x < 1019 - 3)) {
+			position.x = 1019;
+		}
+		else if ((target.position.x >= 1111.3f + 2) && (target.position.x < 1180)) {
+			position.x = 1111.3f + 2;
+		}
 		else if (target.position.x >= rightBound)
 			position.x = target.position.x;
 		else if (target.position.x <= leftBound)

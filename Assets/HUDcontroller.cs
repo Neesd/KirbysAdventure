@@ -81,7 +81,7 @@ public class HUDcontroller : MonoBehaviour {
 		status = state;
 	}
 
-	void superDie() {
+	public void superDie() {
 		lives = 4;
 		health = 6;
 		kirby.superReset ();
