@@ -200,6 +200,11 @@ public class kirbyController : MonoBehaviour {
 			transform.position = position;
 		}
 
+		if (hopping)
+			rigidbody2D.gravityScale = 1;
+		else
+			rigidbody2D.gravityScale = 0;
+
 		Vector2 vel = rigidbody2D.velocity;
 		if (jumping){
 			vel.y = Mathf.Min (vel.y + jumpSpeed / 2.0f, jumpSpeed);
