@@ -94,6 +94,6 @@ public class enemyParentController : MonoBehaviour {
 		else if (!spawned && !spawnReady && !onScreen(spawnPoint)){
 			spawnReady = true;
 		}
-	
 	}
+
 }

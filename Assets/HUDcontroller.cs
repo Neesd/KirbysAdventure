@@ -51,6 +51,10 @@ public class HUDcontroller : MonoBehaviour {
 		health = healthPoints;
 	}
 
+	public void addPoints(int num){
+		points += num;
+	}
+
 	public void loseHealth() {
 		health--;
 		if (health <= 0) {
@@ -66,6 +70,7 @@ public class HUDcontroller : MonoBehaviour {
 		health = 6;
 		if (lives < 0) {
 			superDie ();
+			points = points / 2f;
 		} else {
 			kirby.reset ();
 		}
@@ -211,7 +216,7 @@ public class HUDcontroller : MonoBehaviour {
 		float statusHeight = 72 * heightFactor;
 		Rect statusLoc = new Rect (statusX, statusY, statusWidth, statusHeight);
 		if (status == "miss") {
-			if (statusCounter < 140)
+			if (statusCounter < 280)
 				statusCounter = statusCounter + 1;
 			else {
 				status = "default";
@@ -229,7 +234,7 @@ public class HUDcontroller : MonoBehaviour {
 			GUI.DrawTexture (statusLoc, BeamHUD);
 		}
 		else if (status == "ouch") {
-			if (statusCounter < 140)
+			if (statusCounter < 280)
 				statusCounter = statusCounter + 1;
 			else {
 				status = "default";

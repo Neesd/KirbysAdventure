@@ -16,6 +16,7 @@ public class waddleDooController : MonoBehaviour {
 	private float walkingCounter = 20;
 	private float jumpingCounter = 20;
 	private bool walking;
+
 	
 	public void Flip (){
 		Vector3 scale = transform.localScale;
@@ -135,6 +136,7 @@ public class waddleDooController : MonoBehaviour {
 			if (col.gameObject.tag == "Player") 
 			{
 				col.gameObject.SendMessage("getHit");
+				col.gameObject.SendMessage ("addPoints", 600);
 				Die();
 			}
 			else if (col.gameObject.tag == "Terrain")
