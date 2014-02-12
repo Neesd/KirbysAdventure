@@ -5,6 +5,8 @@ public class CameraController : MonoBehaviour {
 
 	public Transform target;
 	public float distance = 24;
+	public Vector3 LowerLeftCorner;
+	public Vector3 UpperRightCorner;
 
 	// Note: You need to drag "KirbyWalk_0" to the Target parameter
 	// 	     in the inspector
@@ -16,8 +18,8 @@ public class CameraController : MonoBehaviour {
 	}
 
 	void Update () {
-		Vector3 LowerLeftCorner = Camera.main.ViewportToWorldPoint (new Vector3 (0, 0, distance));
-		Vector3 UpperRightCorner = Camera.main.ViewportToWorldPoint (new Vector3 (1, 1, distance));
+		LowerLeftCorner = Camera.main.ViewportToWorldPoint (new Vector3 (0, 0, distance));
+		UpperRightCorner = Camera.main.ViewportToWorldPoint (new Vector3 (1, 1, distance));
 		float minX = LowerLeftCorner.x;
 		float maxX = UpperRightCorner.x;
 

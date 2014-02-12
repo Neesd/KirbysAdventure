@@ -12,6 +12,7 @@ public class BroncoController : MonoBehaviour {
 	private float prevDirection = -1;
 	private float dips = 5;
 	private float counter = 1;
+	private float dist = 2.4f;
 	private float curveDirection = -1;
 	private float height = 5;
 	private Vector3 originalPos;
@@ -172,7 +173,7 @@ public class BroncoController : MonoBehaviour {
 			}
 		}
 		else if (type == "homing"){
-			float dist = 2.4f;
+			dist += 0.005f;
 			position.x += spawnDirection * dist * Time.deltaTime;
 
 			if (targetPos.y > position.y)
@@ -218,6 +219,7 @@ public class BroncoController : MonoBehaviour {
 	{
 		started = false;
 		counter = 1;
+		dist = 2.4f;
 		parent.SendMessage("kill", spawnDirection);
 	}
 }

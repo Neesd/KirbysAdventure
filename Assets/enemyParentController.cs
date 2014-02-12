@@ -10,6 +10,7 @@ public class enemyParentController : MonoBehaviour {
 	private bool spawnReady;
 	private float spawnDirection;
 	private float prevDirection = -1;
+	public bool isLauncher = false;
 	
 	void Flip (){
 		Vector3 scale = child.transform.localScale;
@@ -70,8 +71,9 @@ public class enemyParentController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		spawnPoint = transform.position;
 		Vector3 targetPos = target.position;
-		if (!spawned && spawnReady && onScreen(spawnPoint))
+		if (!spawned && (spawnReady || isLauncher) && onScreen(spawnPoint))
 		{
 			child.transform.position = spawnPoint;
 			if (targetPos.x < spawnPoint.x)

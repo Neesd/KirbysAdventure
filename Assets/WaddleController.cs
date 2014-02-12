@@ -36,6 +36,10 @@ public class WaddleController : MonoBehaviour {
 		// Determines if you're starting facing left or right by + or -
 	}
 
+	void onEnable () {
+		transform.position = parent.transform.position;
+	}
+
 	void Die () {
 		grounded = false;
 		parent.SendMessage("kill", spawnDirection);
