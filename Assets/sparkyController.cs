@@ -99,6 +99,7 @@ public class sparkyController : MonoBehaviour {
 			if (col.gameObject.tag == "Player") 
 			{
 				col.gameObject.SendMessage("getHit");
+				col.gameObject.SendMessage ("addPoints", 600);
 				Die();
 			}
 			else if (col.gameObject.tag == "Terrain")

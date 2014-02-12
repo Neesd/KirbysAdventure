@@ -15,8 +15,8 @@ public class Power : MonoBehaviour {
 
 	void OnTriggerEnter2D (Collider2D col)
 	{
-		if (col.gameObject.tag.Contains("Enemy")) 
-		{
+		if (col.gameObject.tag.Contains("Enemy")){
+			SendMessageUpwards("addPoints", 600);
 			col.gameObject.SendMessage("Die");
 		}
 	}

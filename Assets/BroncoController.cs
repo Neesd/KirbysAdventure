@@ -171,6 +171,32 @@ public class BroncoController : MonoBehaviour {
 				
 			}
 		}
+		else if (type == "homing"){
+			float dist = 2.4f;
+			position.x += spawnDirection * dist * Time.deltaTime;
+
+			if (targetPos.y > position.y)
+				position.y += dist * Time.deltaTime;
+			else if (targetPos.y < position.y)
+				position.y -= dist * Time.deltaTime;
+
+			prevDirection = -1 * transform.localScale.x / 13;
+			if (targetPos.x < position.x)
+			{
+				spawnDirection = -1;
+			}
+			else if (targetPos.x > position.x)
+			{
+				spawnDirection = 1;
+			}
+			
+			if (prevDirection != spawnDirection)
+			{
+				prevDirection = spawnDirection;
+				Flip ();
+			}
+
+		}
 		position.z = -0.2f;
 		transform.position = position;
 	}
@@ -182,6 +208,7 @@ public class BroncoController : MonoBehaviour {
 			if (col.gameObject.tag == "Player") 
 			{
 				col.gameObject.SendMessage("getHit");
+				col.gameObject.SendMessage ("addPoints", 1200);
 				Die ();
 			}
 		}

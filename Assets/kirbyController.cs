@@ -149,6 +149,10 @@ public class kirbyController : MonoBehaviour {
 		currentPower = acquiredPower;
 	}
 
+	public void addPoints(int num){
+		hud.addPoints (num);
+	}
+
 	public void getHit () {
 		if (Time.time - initialTime >= 2) {
 			initialTime = Time.time;

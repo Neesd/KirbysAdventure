@@ -3,7 +3,6 @@ using System.Collections;
 
 public class PowerBeam : MonoBehaviour {
 
-
 	// Use this for initialization
 	void Start () {
 
@@ -23,6 +22,7 @@ public class PowerBeam : MonoBehaviour {
 	{
 		if (col.gameObject.tag.Contains("Enemy")) 
 		{
+			SendMessageUpwards("addPoints", 600);
 			col.gameObject.SendMessage("Die");
 		}
 	}
