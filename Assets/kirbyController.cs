@@ -88,7 +88,9 @@ public class kirbyController : MonoBehaviour {
 		if (other) {
 			if (other.tag == "Terrain" || other.tag == "fancyPlatform") {
 				grounded = true;
-				SetHeight (0);
+				int height = kirbyAnimator.GetInteger ("Height");
+				if (height != 0 && height != -1)
+					SetHeight (0);
 				SetHopping (false);
 				SetFalling (false);
 			}
@@ -243,12 +245,16 @@ public class kirbyController : MonoBehaviour {
 				vel.x = 0;
 			}
 		} else if (height == -1) {
-			if (vel.x > 0.1f)
+			if (vel.x > 0.1f){
 				vel.x = vel.x - drift;
-			else if (vel.x < -0.1f)
+			}
+			else if (vel.x < -0.1f){
 				vel.x = vel.x + drift;
-			else
+			}
+			else {
 				vel.x = 0;
+				SetMoving(false);
+			}
 		} else if (height == 1) {
 			if (moving)
 				vel.x = horizontal * slowSpeed;
@@ -258,7 +264,6 @@ public class kirbyController : MonoBehaviour {
 			// This is when you're HOP-JUMPING, not when you're standing still
 			vel.x = horizontal * speed;
 		}
-
 		if (usingPower == false) {
 			if (currentPower != power.none)
 				haltPowers ();
@@ -295,8 +300,6 @@ public class kirbyController : MonoBehaviour {
 		{
 			// Pressing down only, still can't move though
 			SetHeight (-1);
-			SetMoving (false);
-
 			Vector3 scale = transform.localScale;
 			// Flip the model if you move in a different direction
 			// than where you were previously facing
